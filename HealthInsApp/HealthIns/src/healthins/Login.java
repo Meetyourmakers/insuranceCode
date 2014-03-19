@@ -21,12 +21,17 @@ public class Login extends javax.swing.JFrame {
         exit_LoginButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         jLabel1.setText("Username:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(81, 86, 86, 50);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         jLabel2.setText(" Password:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(81, 155, 86, 50);
 
         submit_LoginButton.setText("Submit");
         submit_LoginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -34,6 +39,8 @@ public class Login extends javax.swing.JFrame {
                 submit_LoginButtonActionPerformed(evt);
             }
         });
+        getContentPane().add(submit_LoginButton);
+        submit_LoginButton.setBounds(81, 211, 88, 29);
 
         register_loginButton.setText("Register");
         register_loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -41,59 +48,27 @@ public class Login extends javax.swing.JFrame {
                 register_loginButtonActionPerformed(evt);
             }
         });
+        getContentPane().add(register_loginButton);
+        register_loginButton.setBounds(213, 211, 95, 29);
 
         username_loginField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 username_loginFieldActionPerformed(evt);
             }
         });
+        getContentPane().add(username_loginField);
+        username_loginField.setBounds(173, 87, 135, 50);
+        getContentPane().add(password_loginField);
+        password_loginField.setBounds(173, 155, 135, 50);
 
         exit_LoginButton.setText("Exit");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(submit_LoginButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                        .addComponent(register_loginButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(username_loginField, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                            .addComponent(password_loginField))))
-                .addGap(92, 92, 92))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(exit_LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(username_loginField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(password_loginField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submit_LoginButton)
-                    .addComponent(register_loginButton))
-                .addGap(18, 18, 18)
-                .addComponent(exit_LoginButton)
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
+        exit_LoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exit_LoginButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(exit_LoginButton);
+        exit_LoginButton.setBounds(148, 258, 100, 29);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -116,13 +91,17 @@ public class Login extends javax.swing.JFrame {
             }
         }
         if(!flag){
-            JOptionPane.showMessageDialog(null,"User "+username+" not found.");
+            JOptionPane.showMessageDialog(null,"User "+username+" not found or password incorrect!");
         }
     }//GEN-LAST:event_submit_LoginButtonActionPerformed
 
     private void register_loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_register_loginButtonActionPerformed
         new RegisterFrame().setVisible(true);
     }//GEN-LAST:event_register_loginButtonActionPerformed
+
+    private void exit_LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_LoginButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exit_LoginButtonActionPerformed
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

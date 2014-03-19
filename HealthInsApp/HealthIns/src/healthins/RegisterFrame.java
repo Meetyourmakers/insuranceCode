@@ -1,10 +1,13 @@
 package healthins;
+import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 public class RegisterFrame extends javax.swing.JFrame {
     
     public RegisterFrame() {
         initComponents();
+        setDefaultCloseOperation(RegisterFrame.DISPOSE_ON_CLOSE);
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -15,6 +18,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         usrInput_Register = new javax.swing.JTextField();
         submitReg_Register = new javax.swing.JButton();
         clearReg_Register = new javax.swing.JButton();
+        close_Register = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +54,13 @@ public class RegisterFrame extends javax.swing.JFrame {
             }
         });
 
+        close_Register.setText("Close");
+        close_Register.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                close_RegisterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,6 +82,10 @@ public class RegisterFrame extends javax.swing.JFrame {
                             .addComponent(usrInput_Register, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                             .addComponent(pswInput_Register))))
                 .addContainerGap(84, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(151, 151, 151)
+                .addComponent(close_Register)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,7 +102,8 @@ public class RegisterFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitReg_Register)
                     .addComponent(clearReg_Register))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(close_Register))
         );
 
         pack();
@@ -107,7 +123,6 @@ public class RegisterFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_clearReg_RegisterActionPerformed
 
     private void submitReg_RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitReg_RegisterActionPerformed
-        setDefaultCloseOperation(RegisterFrame.DISPOSE_ON_CLOSE);
         String username = usrInput_Register.getText();
         String password = pswInput_Register.getText();
         boolean flag = true;
@@ -117,7 +132,9 @@ public class RegisterFrame extends javax.swing.JFrame {
                 break;
             }
         }
-        if(flag){
+        if(username.length()==0 || password.length()==0)
+            JOptionPane.showMessageDialog(null,"Username and Password cannot be blank!");
+        else if(flag){
             Login.users.add(new Usr(username,password));
             HealthIns.saveUsers(Login.users);
             JOptionPane.showMessageDialog(null,"Username "+username+" created!.");
@@ -125,20 +142,24 @@ public class RegisterFrame extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null,"Username "+username+" already in use.");
     }//GEN-LAST:event_submitReg_RegisterActionPerformed
-    public static void main(String args[]) {
+
+    private void close_RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close_RegisterActionPerformed
+         JFrame frame = (JFrame)SwingUtilities.getRoot(this);
+         frame.setVisible(false);
+    }//GEN-LAST:event_close_RegisterActionPerformed
+    public void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                
                 new RegisterFrame().setVisible(true);
-                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearReg_Register;
+    private javax.swing.JButton close_Register;
     private javax.swing.JLabel password_Register;
     private javax.swing.JPasswordField pswInput_Register;
     private javax.swing.JButton submitReg_Register;
