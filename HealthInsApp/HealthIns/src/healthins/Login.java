@@ -1,6 +1,5 @@
 package healthins;
 import java.util.*;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -82,10 +81,9 @@ public class Login extends javax.swing.JFrame {
         Boolean flag = false;
         for (int i=0; i<users.size(); i++){
             if(username.equalsIgnoreCase(users.get(i).getId()) && password.equalsIgnoreCase(users.get(i).getPass())){
-                    NextPage page=new NextPage();
-                    page.setVisible(true);
-                    JLabel label = new JLabel("Welcome:"+username);
-                    page.getContentPane().add(label);
+                    this.setVisible(false);
+                    this.dispose();
+                    new UserContent().setVisible(true);
                     flag = true;
                     break;
             }
@@ -96,6 +94,8 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_submit_LoginButtonActionPerformed
 
     private void register_loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_register_loginButtonActionPerformed
+        this.setVisible(false);
+        this.dispose();
         new RegisterFrame().setVisible(true);
     }//GEN-LAST:event_register_loginButtonActionPerformed
 

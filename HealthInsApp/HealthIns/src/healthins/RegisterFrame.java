@@ -1,8 +1,5 @@
 package healthins;
-import java.awt.Window;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 public class RegisterFrame extends javax.swing.JFrame {
     
     public RegisterFrame() {
@@ -138,14 +135,22 @@ public class RegisterFrame extends javax.swing.JFrame {
             Login.users.add(new Usr(username,password));
             HealthIns.saveUsers(Login.users);
             JOptionPane.showMessageDialog(null,"Username "+username+" created!.");
+            usrInput_Register.setText("");
+            pswInput_Register.setText("");
         }
-        else
+        else{
             JOptionPane.showMessageDialog(null,"Username "+username+" already in use.");
+            usrInput_Register.setText("");
+            pswInput_Register.setText("");
+        }
     }//GEN-LAST:event_submitReg_RegisterActionPerformed
 
     private void close_RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close_RegisterActionPerformed
-         JFrame frame = (JFrame)SwingUtilities.getRoot(this);
-         frame.setVisible(false);
+         this.dispose();
+         this.setVisible(false);
+         Login frame = new Login(Login.users);
+         frame.setSize(400,400);
+	 frame.setVisible(true);
     }//GEN-LAST:event_close_RegisterActionPerformed
     public void main(String args[]) {
 

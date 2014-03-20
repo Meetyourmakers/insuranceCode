@@ -41,7 +41,7 @@ public class HealthIns {
         ArrayList <Usr> users = new ArrayList();
         users = readUsers(users);
         try{
-		Login frame=new Login(users);
+		Login frame = new Login(users);
 		frame.setSize(400,400);
 		frame.setVisible(true);
 	}
