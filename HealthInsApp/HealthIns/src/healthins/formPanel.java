@@ -1,6 +1,7 @@
 package healthins;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -17,12 +18,12 @@ import javax.swing.JTextField;
  *
  * @author vitormgb
  */
-public class UserContent extends javax.swing.JFrame {
+public class formPanel extends javax.swing.JFrame {
 
     /**
      * Creates new form UserContent
      */
-    public UserContent() {
+    public formPanel() {
         initComponents();
         setDefaultCloseOperation(RegisterFrame.DISPOSE_ON_CLOSE);
         getImages();
@@ -64,6 +65,11 @@ public class UserContent extends javax.swing.JFrame {
         contactPanel = new javax.swing.JTabbedPane();
         historyPanel = new javax.swing.JTabbedPane();
         logoutButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        carInsButton = new javax.swing.JRadioButton();
+        healthInsButton = new javax.swing.JRadioButton();
+        lifeInsButton = new javax.swing.JRadioButton();
+        productsLabel = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,13 +98,67 @@ public class UserContent extends javax.swing.JFrame {
             }
         });
 
+        carInsButton.setText("Car Insurance");
+        carInsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carInsButtonActionPerformed(evt);
+            }
+        });
+
+        healthInsButton.setText("Health Insurance");
+        healthInsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                healthInsButtonActionPerformed(evt);
+            }
+        });
+
+        lifeInsButton.setText("Business Insurance");
+        lifeInsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lifeInsButtonActionPerformed(evt);
+            }
+        });
+
+        productsLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        productsLabel.setText("Available Products");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(carInsButton)
+                    .addComponent(healthInsButton)
+                    .addComponent(lifeInsButton))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(productsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(productsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(carInsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(healthInsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lifeInsButton)
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -120,7 +180,9 @@ public class UserContent extends javax.swing.JFrame {
                     .addComponent(contactPanel)
                     .addComponent(calendarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                     .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoutButton))
         );
 
@@ -136,15 +198,35 @@ public class UserContent extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void formPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formPanelMouseClicked
-        this.dispose();
-        this.setVisible(false);
-        formPanel frame = new formPanel();
-        frame.setVisible(true);
+
+        
     }//GEN-LAST:event_formPanelMouseClicked
 
     private void calendarPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calendarPanelMouseClicked
         
     }//GEN-LAST:event_calendarPanelMouseClicked
+
+    private void carInsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carInsButtonActionPerformed
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File("ins/car/carInsApp.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "PDF files are not supported by your PC.");
+            }
+        }
+    }//GEN-LAST:event_carInsButtonActionPerformed
+
+    private void lifeInsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lifeInsButtonActionPerformed
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File("ins/business/busInsAll.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "PDF files are not supported by your PC.");
+            }
+        }
+    }//GEN-LAST:event_lifeInsButtonActionPerformed
 
     private void contactPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactPanelMouseClicked
         this.dispose();
@@ -152,6 +234,17 @@ public class UserContent extends javax.swing.JFrame {
         contactPanel frame = new contactPanel();
         frame.setVisible(true);
     }//GEN-LAST:event_contactPanelMouseClicked
+
+    private void healthInsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_healthInsButtonActionPerformed
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File("ins/health/healthInsApp.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "PDF files are not supported by your PC.");
+            }
+        }
+    }//GEN-LAST:event_healthInsButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,13 +263,13 @@ public class UserContent extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -184,7 +277,7 @@ public class UserContent extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new UserContent().setVisible(true);
+                new formPanel().setVisible(true);
 
             }
         });
@@ -192,9 +285,14 @@ public class UserContent extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane calendarPanel;
+    private javax.swing.JRadioButton carInsButton;
     private javax.swing.JTabbedPane contactPanel;
     private javax.swing.JTabbedPane formPanel;
+    private javax.swing.JRadioButton healthInsButton;
     private javax.swing.JTabbedPane historyPanel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton lifeInsButton;
     private javax.swing.JButton logoutButton;
+    private java.awt.Label productsLabel;
     // End of variables declaration//GEN-END:variables
 }
