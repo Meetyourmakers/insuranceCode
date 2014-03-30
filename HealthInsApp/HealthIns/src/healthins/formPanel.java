@@ -1,9 +1,6 @@
 package healthins;
 
-import java.awt.BorderLayout;
 import java.awt.Desktop;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -35,16 +31,19 @@ public class formPanel extends javax.swing.JFrame {
             BufferedImage contactIcon = ImageIO.read(new File("imgs/cont.png"));
             BufferedImage formIcon = ImageIO.read(new File("imgs/serv.png"));
             BufferedImage historyIcon = ImageIO.read(new File("imgs/hist.png"));
+            BufferedImage calcIcon = ImageIO.read(new File("imgs/calc.png"));
 
             JLabel calLabel = new JLabel(new ImageIcon(calendarIcon));
             JLabel contactLabel = new JLabel(new ImageIcon(contactIcon));
             JLabel formLabel = new JLabel(new ImageIcon(formIcon));
             JLabel histLabel = new JLabel(new ImageIcon(historyIcon));
+            JLabel calcLabel = new JLabel(new ImageIcon(calcIcon));
 
             this.calendarPanel.add(calLabel);
             this.contactPanel.add(contactLabel);
             this.formPanel.add(formLabel);
             this.historyPanel.add(histLabel);
+            this.calcPanel.add(calcLabel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to load images.");
 
@@ -66,10 +65,9 @@ public class formPanel extends javax.swing.JFrame {
         historyPanel = new javax.swing.JTabbedPane();
         logoutButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        carInsButton = new javax.swing.JRadioButton();
-        healthInsButton = new javax.swing.JRadioButton();
-        lifeInsButton = new javax.swing.JRadioButton();
-        productsLabel = new java.awt.Label();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
+        calcPanel = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,58 +96,73 @@ public class formPanel extends javax.swing.JFrame {
             }
         });
 
-        carInsButton.setText("Car Insurance");
-        carInsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                carInsButtonActionPerformed(evt);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Available Products");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Auto");
+        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Private: Application Form");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Private: Policy Wording");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("MyCar: Application Form");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("MyCar: Policy Wording");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Motor: Application Form");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Motor: Brochure");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Business");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("All Risk: Application Form");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("All Risk: Brochure");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Fire Risks: Application Form");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Fire Risks: Brochure");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Health");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Health Brochure");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Health Policy Wording");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Health Application Form");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Medical");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Medical Brochure");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Medical Policy Wording");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Medical Application Form");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTree1ValueChanged(evt);
             }
         });
-
-        healthInsButton.setText("Health Insurance");
-        healthInsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                healthInsButtonActionPerformed(evt);
-            }
-        });
-
-        lifeInsButton.setText("Business Insurance");
-        lifeInsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lifeInsButtonActionPerformed(evt);
-            }
-        });
-
-        productsLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        productsLabel.setText("Available Products");
+        jScrollPane1.setViewportView(jTree1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(carInsButton)
-                    .addComponent(healthInsButton)
-                    .addComponent(lifeInsButton))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(productsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(productsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(carInsButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(healthInsButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lifeInsButton)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        calcPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                calcPanelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,7 +171,6 @@ public class formPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -166,22 +178,29 @@ public class formPanel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(contactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(historyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                        .addComponent(historyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(calcPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(logoutButton)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 507, Short.MAX_VALUE)
+                                .addComponent(logoutButton)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(historyPanel)
-                    .addComponent(contactPanel)
                     .addComponent(calendarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(calcPanel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(historyPanel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(contactPanel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(formPanel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoutButton))
         );
@@ -206,28 +225,6 @@ public class formPanel extends javax.swing.JFrame {
         
     }//GEN-LAST:event_calendarPanelMouseClicked
 
-    private void carInsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carInsButtonActionPerformed
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File myFile = new File("ins/car/carInsApp.pdf");
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "PDF files are not supported by your PC.");
-            }
-        }
-    }//GEN-LAST:event_carInsButtonActionPerformed
-
-    private void lifeInsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lifeInsButtonActionPerformed
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File myFile = new File("ins/business/busInsAll.pdf");
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "PDF files are not supported by your PC.");
-            }
-        }
-    }//GEN-LAST:event_lifeInsButtonActionPerformed
-
     private void contactPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactPanelMouseClicked
         this.dispose();
         this.setVisible(false);
@@ -235,17 +232,139 @@ public class formPanel extends javax.swing.JFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_contactPanelMouseClicked
 
-    private void healthInsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_healthInsButtonActionPerformed
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File myFile = new File("ins/health/healthInsApp.pdf");
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "PDF files are not supported by your PC.");
-            }
+    private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged
+        DefaultMutableTreeNode selectedElement =(DefaultMutableTreeNode)jTree1.getSelectionPath().getLastPathComponent();
+        String k;
+        k = selectedElement.toString();
+        switch (k) {
+            //Car Forms
+            case "Private: Application Form":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/auto/carForm.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            case "Private: Policy Wording":
+                
+                break;
+            case "MyCar: Application Form":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/auto/mycarForm.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            case "MyCar: Policy Wording":
+                
+                break;
+            case "Motor: Application Form":
+                
+                break;
+            case "Motor: Brochure":
+                
+                break;
+             //Business forms
+            case "All Risk: Application Form":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/bus/busAllRiskForm.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            case "All Risk: Brochure":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/bus/busBrochure.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            case "Fire Risks: Application Form":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/bus/busFireForm.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            case "Fire Risks: Brochure":
+                
+                break;
+            //Health Forms
+            case "Health Brochure":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/health/healthBrochure.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            case "Health Policy Wording":
+                
+                break;
+            case "Health Application Form":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/health/healthForm.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            //Medical Forms
+            case "Medical Brochure":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/med/medBrochure.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            case "Medical Policy Wording":
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        File myFile = new File("ins/med/medPolicyWord.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    } catch (IOException ex) {
+        
+                    }
+                }
+                break;
+            case "Medical Application Form":
+                
+                break;
         }
-    }//GEN-LAST:event_healthInsButtonActionPerformed
+    }//GEN-LAST:event_jTree1ValueChanged
 
+    private void calcPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcPanelMouseClicked
+        this.dispose();
+        this.setVisible(false);
+        calculatorPanel frame = new calculatorPanel();
+        frame.setVisible(true);
+    }//GEN-LAST:event_calcPanelMouseClicked
+
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -262,13 +381,7 @@ public class formPanel extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(formPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -284,15 +397,14 @@ public class formPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane calcPanel;
     private javax.swing.JTabbedPane calendarPanel;
-    private javax.swing.JRadioButton carInsButton;
     private javax.swing.JTabbedPane contactPanel;
     private javax.swing.JTabbedPane formPanel;
-    private javax.swing.JRadioButton healthInsButton;
     private javax.swing.JTabbedPane historyPanel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton lifeInsButton;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTree jTree1;
     private javax.swing.JButton logoutButton;
-    private java.awt.Label productsLabel;
     // End of variables declaration//GEN-END:variables
 }

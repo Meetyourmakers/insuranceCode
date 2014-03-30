@@ -1,8 +1,5 @@
 package healthins;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +7,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
  *
@@ -34,16 +29,19 @@ public class UserContent extends javax.swing.JFrame {
             BufferedImage contactIcon = ImageIO.read(new File("imgs/cont.png"));
             BufferedImage formIcon = ImageIO.read(new File("imgs/serv.png"));
             BufferedImage historyIcon = ImageIO.read(new File("imgs/hist.png"));
+            BufferedImage calcIcon = ImageIO.read(new File("imgs/calc.png"));
 
             JLabel calLabel = new JLabel(new ImageIcon(calendarIcon));
             JLabel contactLabel = new JLabel(new ImageIcon(contactIcon));
             JLabel formLabel = new JLabel(new ImageIcon(formIcon));
             JLabel histLabel = new JLabel(new ImageIcon(historyIcon));
+            JLabel calcLabel = new JLabel(new ImageIcon(calcIcon));
 
             this.calendarPanel.add(calLabel);
             this.contactPanel.add(contactLabel);
             this.formPanel.add(formLabel);
             this.historyPanel.add(histLabel);
+            this.calcPanel.add(calcLabel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to load images.");
 
@@ -64,6 +62,7 @@ public class UserContent extends javax.swing.JFrame {
         contactPanel = new javax.swing.JTabbedPane();
         historyPanel = new javax.swing.JTabbedPane();
         logoutButton = new javax.swing.JButton();
+        calcPanel = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,13 +91,19 @@ public class UserContent extends javax.swing.JFrame {
             }
         });
 
+        calcPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                calcPanelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -106,8 +111,11 @@ public class UserContent extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(contactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(historyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(historyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(calcPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(logoutButton)))
                 .addContainerGap())
@@ -115,12 +123,13 @@ public class UserContent extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(historyPanel)
                     .addComponent(contactPanel)
                     .addComponent(calendarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(calcPanel))
+                .addGap(220, 220, 220)
                 .addComponent(logoutButton))
         );
 
@@ -153,6 +162,13 @@ public class UserContent extends javax.swing.JFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_contactPanelMouseClicked
 
+    private void calcPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcPanelMouseClicked
+        this.dispose();
+        this.setVisible(false);
+        calculatorPanel frame = new calculatorPanel();
+        frame.setVisible(true);
+    }//GEN-LAST:event_calcPanelMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -169,13 +185,7 @@ public class UserContent extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(UserContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -191,6 +201,7 @@ public class UserContent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane calcPanel;
     private javax.swing.JTabbedPane calendarPanel;
     private javax.swing.JTabbedPane contactPanel;
     private javax.swing.JTabbedPane formPanel;

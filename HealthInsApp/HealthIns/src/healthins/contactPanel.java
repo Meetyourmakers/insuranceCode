@@ -1,8 +1,6 @@
 package healthins;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+
 
 /**
  *
@@ -34,16 +31,19 @@ public class contactPanel extends javax.swing.JFrame {
             BufferedImage contactIcon = ImageIO.read(new File("imgs/cont.png"));
             BufferedImage formIcon = ImageIO.read(new File("imgs/serv.png"));
             BufferedImage historyIcon = ImageIO.read(new File("imgs/hist.png"));
+            BufferedImage calcIcon = ImageIO.read(new File("imgs/calc.png"));
 
             JLabel calLabel = new JLabel(new ImageIcon(calendarIcon));
             JLabel contactLabel = new JLabel(new ImageIcon(contactIcon));
             JLabel formLabel = new JLabel(new ImageIcon(formIcon));
             JLabel histLabel = new JLabel(new ImageIcon(historyIcon));
+            JLabel calcLabel = new JLabel(new ImageIcon(calcIcon));
 
             this.calendarPanel.add(calLabel);
             this.contactPanel.add(contactLabel);
             this.formPanel.add(formLabel);
             this.historyPanel.add(histLabel);
+            this.calcPanel.add(calcLabel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to load images.");
 
@@ -64,15 +64,10 @@ public class contactPanel extends javax.swing.JFrame {
         contactPanel = new javax.swing.JTabbedPane();
         historyPanel = new javax.swing.JTabbedPane();
         logoutButton = new javax.swing.JButton();
-        productsLabel = new java.awt.Label();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        nameContactBox = new javax.swing.JTextField();
-        emailContactBox = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        questionBox = new javax.swing.JTextArea();
-        submitContactButton = new javax.swing.JButton();
-        clearContactButton = new javax.swing.JButton();
+        addContactButton = new javax.swing.JButton();
+        findContactButton = new javax.swing.JButton();
+        calcPanel = new javax.swing.JTabbedPane();
+        textArea1 = new java.awt.TextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,35 +90,23 @@ public class contactPanel extends javax.swing.JFrame {
             }
         });
 
-        productsLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        productsLabel.setText("Contact Us");
-
-        jLabel1.setText("Name:");
-
-        jLabel2.setText("E-Mail:");
-
-        nameContactBox.addActionListener(new java.awt.event.ActionListener() {
+        addContactButton.setText("New Contact");
+        addContactButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameContactBoxActionPerformed(evt);
+                addContactButtonActionPerformed(evt);
             }
         });
 
-        questionBox.setColumns(20);
-        questionBox.setRows(5);
-        questionBox.setText("Your question...");
-        questionBox.addMouseListener(new java.awt.event.MouseAdapter() {
+        findContactButton.setText("Find Contact");
+        findContactButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                findContactButtonActionPerformed(evt);
+            }
+        });
+
+        calcPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                questionBoxMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(questionBox);
-
-        submitContactButton.setText("Submit");
-
-        clearContactButton.setText("Clear");
-        clearContactButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearContactButtonActionPerformed(evt);
+                calcPanelMouseClicked(evt);
             }
         });
 
@@ -134,6 +117,7 @@ public class contactPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -143,30 +127,19 @@ public class contactPanel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(contactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(submitContactButton)
+                                .addComponent(addContactButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(clearContactButton)))
+                                .addComponent(findContactButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(logoutButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(historyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(historyPanel))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(logoutButton))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(productsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(emailContactBox))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(nameContactBox, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(calcPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -176,24 +149,15 @@ public class contactPanel extends javax.swing.JFrame {
                     .addComponent(historyPanel)
                     .addComponent(contactPanel)
                     .addComponent(calendarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                .addGap(1, 1, 1)
-                .addComponent(productsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(calcPanel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nameContactBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(emailContactBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(logoutButton)
-                    .addComponent(submitContactButton)
-                    .addComponent(clearContactButton)))
+                    .addComponent(addContactButton)
+                    .addComponent(findContactButton)))
         );
 
         pack();
@@ -218,17 +182,20 @@ public class contactPanel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_calendarPanelMouseClicked
 
-    private void nameContactBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameContactBoxActionPerformed
+    private void findContactButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findContactButtonActionPerformed
+        
+    }//GEN-LAST:event_findContactButtonActionPerformed
+
+    private void addContactButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addContactButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nameContactBoxActionPerformed
+    }//GEN-LAST:event_addContactButtonActionPerformed
 
-    private void clearContactButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearContactButtonActionPerformed
-        this.questionBox.setText("");
-    }//GEN-LAST:event_clearContactButtonActionPerformed
-
-    private void questionBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_questionBoxMouseClicked
-        this.questionBox.setText("");
-    }//GEN-LAST:event_questionBoxMouseClicked
+    private void calcPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcPanelMouseClicked
+        this.dispose();
+        this.setVisible(false);
+        calculatorPanel frame = new calculatorPanel();
+        frame.setVisible(true);
+    }//GEN-LAST:event_calcPanelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -246,13 +213,7 @@ public class contactPanel extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(contactPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(contactPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(contactPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(contactPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -268,19 +229,14 @@ public class contactPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addContactButton;
+    private javax.swing.JTabbedPane calcPanel;
     private javax.swing.JTabbedPane calendarPanel;
-    private javax.swing.JButton clearContactButton;
     private javax.swing.JTabbedPane contactPanel;
-    private javax.swing.JTextField emailContactBox;
+    private javax.swing.JButton findContactButton;
     private javax.swing.JTabbedPane formPanel;
     private javax.swing.JTabbedPane historyPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;
-    private javax.swing.JTextField nameContactBox;
-    private java.awt.Label productsLabel;
-    private javax.swing.JTextArea questionBox;
-    private javax.swing.JButton submitContactButton;
+    private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,10 +1,12 @@
 package healthins;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Usr implements Serializable{
     private String id;
     private String pass;
     private Calendar cal;
+    private ArrayList<Contact> contactList;
     
     public Usr(String id, String pass){
         this.id = id;
@@ -21,6 +23,10 @@ public class Usr implements Serializable{
 
     public Calendar getCal() {
         return cal;
+    }
+    
+    public ArrayList<Contact> getContactList(){
+        return contactList;
     }
     
     public void setPass(String pass) {
