@@ -252,27 +252,37 @@ public class contactPanel extends javax.swing.JFrame {
 
     private void addContactButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addContactButtonActionPerformed
         ArrayList<Contact> contacts = new ArrayList();
+        boolean isEmpty = false;
+        boolean flag = true;
+        String ownerList = HealthIns.currentUsr.getId();
         contacts = readContactList(contacts);
         String name = JOptionPane.showInputDialog("New contact name: ");
         String mail = JOptionPane.showInputDialog("New contact mail: ");
         String phone = JOptionPane.showInputDialog("New contact phone: ");
-        boolean flag = true;
-        String ownerList = HealthIns.currentUsr.getId();
-        for(int i=0; i<contacts.size(); i++){
-            if(contacts.get(i).getName().equals(name) && contacts.get(i).getOwner().equals(ownerList)){
-                flag = false;
-                break;
-            }
+        try{
+            if(name.length()==0 || mail.length()==0 || phone.length()==0)
+                isEmpty = true;
+        }catch(Exception e){
+            isEmpty = true;
         }
-        if(flag){
-            contacts.add(new Contact(name,mail,phone,HealthIns.currentUsr.getId()));
-            JOptionPane.showMessageDialog(null,"Contact "+name+" added to your contact list!");
-            saveContactList(contacts);
-            showContacts();
+        if(!isEmpty){
+            for(int i=0; i<contacts.size(); i++){
+                if(contacts.get(i).getName().equals(name) && contacts.get(i).getOwner().equals(ownerList)){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag){
+                contacts.add(new Contact(name,mail,phone,HealthIns.currentUsr.getId()));
+                JOptionPane.showMessageDialog(null,"Contact "+name+" added to your contact list!");
+                saveContactList(contacts);
+                showContacts();
+            }
+            else
+                JOptionPane.showMessageDialog(null,"Contact "+name+" already is in your contact list!");
         }
         else
-            JOptionPane.showMessageDialog(null,"Contact "+name+" already is in your contact list!");
-       
+            JOptionPane.showMessageDialog(null,"None of the input field can be blank.");
     }//GEN-LAST:event_addContactButtonActionPerformed
 
     private void calcPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcPanelMouseClicked
