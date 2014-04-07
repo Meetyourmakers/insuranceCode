@@ -80,8 +80,9 @@ public class Login extends javax.swing.JFrame {
         String password = password_loginField.getText();
         Boolean flag = false;
         for (int i=0; i<users.size(); i++){
-            if(username.equalsIgnoreCase(users.get(i).getId()) && password.equalsIgnoreCase(users.get(i).getPass())){
+            if(username.equalsIgnoreCase(users.get(i).getId()) && password.equals(users.get(i).getPass())){
                     this.setVisible(false);
+                    HealthIns.setCurrentUsr(users.get(i));
                     this.dispose();
                     new UserContent().setVisible(true);
                     flag = true;

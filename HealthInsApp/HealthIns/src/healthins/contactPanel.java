@@ -2,8 +2,16 @@ package healthins;
 
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -25,6 +33,40 @@ public class contactPanel extends javax.swing.JFrame {
         getImages();
     }
 
+    public static ArrayList<Contact> readContactList(ArrayList <Contact> contacts){
+        try{
+            InputStream file = new FileInputStream("contactList");
+            InputStream buffer = new BufferedInputStream(file);
+            File f = new File("contactList");
+            if(f.length()!=0){
+                try(ObjectInput input = new ObjectInputStream (buffer)) {
+                    ArrayList<Contact> recoveredUsers = (ArrayList<Contact>)input.readObject();
+                    for(Contact c: recoveredUsers)
+                       contacts.add(new Contact(c.getName(), c.getMail(), c.getPhone(), c.getOwner()));
+                }
+            }
+        }
+        catch(ClassNotFoundException | IOException ex){
+            return null;
+        }
+        return contacts;
+    }
+    
+    public static Boolean saveContactList(ArrayList <Contact> contacts){
+        try {
+            FileOutputStream fos = new FileOutputStream("contactList");
+            try (ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                oos.writeObject(contacts);
+            }
+        }
+        catch(IOException ex) {
+            return false;
+        }
+        return true; 
+    }
+    
+    
+    
     private void getImages() {
         try {
             BufferedImage calendarIcon = ImageIO.read(new File("imgs/cal.png"));
@@ -44,11 +86,17 @@ public class contactPanel extends javax.swing.JFrame {
             this.formPanel.add(formLabel);
             this.historyPanel.add(histLabel);
             this.calcPanel.add(calcLabel);
+            
+            showContacts();
+            
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to load images.");
 
         }
     }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,7 +115,7 @@ public class contactPanel extends javax.swing.JFrame {
         addContactButton = new javax.swing.JButton();
         findContactButton = new javax.swing.JButton();
         calcPanel = new javax.swing.JTabbedPane();
-        textArea1 = new java.awt.TextArea();
+        contactsTextArea = new java.awt.TextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +165,7 @@ public class contactPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(contactsTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -152,7 +200,7 @@ public class contactPanel extends javax.swing.JFrame {
                     .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                     .addComponent(calcPanel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(contactsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(logoutButton)
@@ -183,11 +231,48 @@ public class contactPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_calendarPanelMouseClicked
 
     private void findContactButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findContactButtonActionPerformed
-        
+        ArrayList<Contact> contacts = new ArrayList();
+        contacts = readContactList(contacts);
+        String ownerList = HealthIns.currentUsr.getId();
+        Boolean flag = false;
+        String searchValue = JOptionPane.showInputDialog("Insert the name of the contact: ");
+        for(int i=0; i<contacts.size(); i++){
+            if(contacts.get(i).getName().equals(searchValue) && contacts.get(i).getOwner().equals(ownerList)){
+                contactsTextArea.setText("Contact found!\n");
+                contactsTextArea.append("Name: "+contacts.get(i).getName()+"\n");
+                contactsTextArea.append("E-Mail: "+contacts.get(i).getMail()+"\n");
+                contactsTextArea.append("Phone: "+contacts.get(i).getPhone()+"\n\n");
+                flag = true;
+                break;
+            }
+        }
+        if(!flag)
+            contactsTextArea.setText("Contact named "+searchValue+" not found");
     }//GEN-LAST:event_findContactButtonActionPerformed
 
     private void addContactButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addContactButtonActionPerformed
-        // TODO add your handling code here:
+        ArrayList<Contact> contacts = new ArrayList();
+        contacts = readContactList(contacts);
+        String name = JOptionPane.showInputDialog("New contact name: ");
+        String mail = JOptionPane.showInputDialog("New contact mail: ");
+        String phone = JOptionPane.showInputDialog("New contact phone: ");
+        boolean flag = true;
+        String ownerList = HealthIns.currentUsr.getId();
+        for(int i=0; i<contacts.size(); i++){
+            if(contacts.get(i).getName().equals(name) && contacts.get(i).getOwner().equals(ownerList)){
+                flag = false;
+                break;
+            }
+        }
+        if(flag){
+            contacts.add(new Contact(name,mail,phone,HealthIns.currentUsr.getId()));
+            JOptionPane.showMessageDialog(null,"Contact "+name+" added to your contact list!");
+            saveContactList(contacts);
+            showContacts();
+        }
+        else
+            JOptionPane.showMessageDialog(null,"Contact "+name+" already is in your contact list!");
+       
     }//GEN-LAST:event_addContactButtonActionPerformed
 
     private void calcPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcPanelMouseClicked
@@ -197,6 +282,19 @@ public class contactPanel extends javax.swing.JFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_calcPanelMouseClicked
 
+    private void showContacts(){
+        ArrayList<Contact> contacts = new ArrayList();
+        contacts = readContactList(contacts);
+        String ownerList = HealthIns.currentUsr.getId();
+        contactsTextArea.setText("Your contact list\n\n");
+        for(int i=0; i<contacts.size(); i++){
+            if(contacts.get(i).getOwner().equals(ownerList)){
+                contactsTextArea.append("Name: "+contacts.get(i).getName()+"\n");
+                contactsTextArea.append("E-Mail: "+contacts.get(i).getMail()+"\n");
+                contactsTextArea.append("Phone: "+contacts.get(i).getPhone()+"\n\n");
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -222,8 +320,9 @@ public class contactPanel extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                
                 new contactPanel().setVisible(true);
-
+                
             }
         });
     }
@@ -233,10 +332,10 @@ public class contactPanel extends javax.swing.JFrame {
     private javax.swing.JTabbedPane calcPanel;
     private javax.swing.JTabbedPane calendarPanel;
     private javax.swing.JTabbedPane contactPanel;
+    private java.awt.TextArea contactsTextArea;
     private javax.swing.JButton findContactButton;
     private javax.swing.JTabbedPane formPanel;
     private javax.swing.JTabbedPane historyPanel;
     private javax.swing.JButton logoutButton;
-    private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
 }
