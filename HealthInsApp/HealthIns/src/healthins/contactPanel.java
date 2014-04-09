@@ -107,6 +107,7 @@ public class contactPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToggleButton1 = new javax.swing.JToggleButton();
         formPanel = new javax.swing.JTabbedPane();
         calendarPanel = new javax.swing.JTabbedPane();
         contactPanel = new javax.swing.JTabbedPane();
@@ -116,6 +117,18 @@ public class contactPanel extends javax.swing.JFrame {
         findContactButton = new javax.swing.JButton();
         calcPanel = new javax.swing.JTabbedPane();
         contactsTextArea = new java.awt.TextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        nameField = new javax.swing.JTextField();
+        mailField = new javax.swing.JTextField();
+        phoneField = new javax.swing.JTextField();
+        reloadButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+
+        jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,7 +151,7 @@ public class contactPanel extends javax.swing.JFrame {
             }
         });
 
-        addContactButton.setText("New Contact");
+        addContactButton.setText("Add Contact");
         addContactButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addContactButtonActionPerformed(evt);
@@ -158,14 +171,54 @@ public class contactPanel extends javax.swing.JFrame {
             }
         });
 
+        contactsTextArea.setMaximumSize(new java.awt.Dimension(357, 210));
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel1.setText("New Contact");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel2.setText("Name: ");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel3.setText("E-Mail:");
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel4.setText("Phone:");
+
+        reloadButton.setText("Reload List");
+        reloadButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reloadButtonMouseClicked(evt);
+            }
+        });
+        reloadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reloadButtonActionPerformed(evt);
+            }
+        });
+
+        clearButton.setText("Clear");
+        clearButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clearButtonMouseClicked(evt);
+            }
+        });
+
+        deleteButton.setText("Delete Contact");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(contactsTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logoutButton)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -175,20 +228,40 @@ public class contactPanel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(contactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(addContactButton)
+                                .addComponent(findContactButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(findContactButton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(reloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                            .addComponent(contactsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(logoutButton))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(addContactButton)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(clearButton))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(nameField)
+                                        .addComponent(mailField)
+                                        .addComponent(phoneField, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jLabel1)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(historyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(calcPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                .addComponent(calcPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,13 +272,37 @@ public class contactPanel extends javax.swing.JFrame {
                     .addComponent(calendarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                     .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                     .addComponent(calcPanel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contactsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(logoutButton)
-                    .addComponent(addContactButton)
-                    .addComponent(findContactButton)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(phoneField)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addContactButton)
+                            .addComponent(clearButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(contactsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(findContactButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(logoutButton)
+                        .addComponent(deleteButton)
+                        .addComponent(reloadButton))))
         );
 
         pack();
@@ -238,7 +335,7 @@ public class contactPanel extends javax.swing.JFrame {
         String searchValue = JOptionPane.showInputDialog("Insert the name of the contact: ");
         for(int i=0; i<contacts.size(); i++){
             if(contacts.get(i).getName().equals(searchValue) && contacts.get(i).getOwner().equals(ownerList)){
-                contactsTextArea.setText("Contact found!\n");
+                contactsTextArea.setText("Contact found!\n\n");
                 contactsTextArea.append("Name: "+contacts.get(i).getName()+"\n");
                 contactsTextArea.append("E-Mail: "+contacts.get(i).getMail()+"\n");
                 contactsTextArea.append("Phone: "+contacts.get(i).getPhone()+"\n\n");
@@ -256,9 +353,9 @@ public class contactPanel extends javax.swing.JFrame {
         boolean flag = true;
         String ownerList = HealthIns.currentUsr.getId();
         contacts = readContactList(contacts);
-        String name = JOptionPane.showInputDialog("New contact name: ");
-        String mail = JOptionPane.showInputDialog("New contact mail: ");
-        String phone = JOptionPane.showInputDialog("New contact phone: ");
+        String name = this.nameField.getText();
+        String mail = this.mailField.getText();
+        String phone = this.phoneField.getText();
         try{
             if(name.length()==0 || mail.length()==0 || phone.length()==0)
                 isEmpty = true;
@@ -267,7 +364,7 @@ public class contactPanel extends javax.swing.JFrame {
         }
         if(!isEmpty){
             for(int i=0; i<contacts.size(); i++){
-                if(contacts.get(i).getName().equals(name) && contacts.get(i).getOwner().equals(ownerList)){
+                if(contacts.get(i).getName().equalsIgnoreCase(name) && contacts.get(i).getOwner().equals(ownerList)){
                     flag = false;
                     break;
                 }
@@ -277,6 +374,9 @@ public class contactPanel extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Contact "+name+" added to your contact list!");
                 saveContactList(contacts);
                 showContacts();
+                this.mailField.setText("");
+                this.nameField.setText("");
+                this.phoneField.setText("");
             }
             else
                 JOptionPane.showMessageDialog(null,"Contact "+name+" already is in your contact list!");
@@ -291,6 +391,52 @@ public class contactPanel extends javax.swing.JFrame {
         calculatorPanel frame = new calculatorPanel();
         frame.setVisible(true);
     }//GEN-LAST:event_calcPanelMouseClicked
+
+    private void clearButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseClicked
+        this.mailField.setText("");
+        this.nameField.setText("");
+        this.phoneField.setText("");
+    }//GEN-LAST:event_clearButtonMouseClicked
+
+    private void reloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reloadButtonActionPerformed
+
+    private void reloadButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadButtonMouseClicked
+        showContacts();
+    }//GEN-LAST:event_reloadButtonMouseClicked
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        String owner = HealthIns.currentUsr.getId();
+        boolean flag = false;
+        boolean isDeleted = false;
+        String deleteContactName = JOptionPane.showInputDialog("Contact Name:");
+        ArrayList<Contact> contacts = new ArrayList();
+        contacts = readContactList(contacts);
+        try{
+            if(deleteContactName.length()!=0)
+                flag = true;
+        }catch(Exception e){
+            flag = false;
+        }
+        if(flag){
+            for(int i=0; i<contacts.size(); i++){
+                if(deleteContactName.equalsIgnoreCase(contacts.get(i).getName()) && owner.equalsIgnoreCase(contacts.get(i).getOwner())){
+                    contacts.remove(i);
+                    isDeleted = true;
+                    break;
+                }
+            }
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Contact name can't be blank!");
+        if(isDeleted)
+            JOptionPane.showMessageDialog(null, "Contact deleted!");
+        else
+            JOptionPane.showMessageDialog(null, "Contact not found!");
+        saveContactList(contacts);
+        showContacts();
+    }//GEN-LAST:event_deleteButtonMouseClicked
 
     private void showContacts(){
         ArrayList<Contact> contacts = new ArrayList();
@@ -341,11 +487,22 @@ public class contactPanel extends javax.swing.JFrame {
     private javax.swing.JButton addContactButton;
     private javax.swing.JTabbedPane calcPanel;
     private javax.swing.JTabbedPane calendarPanel;
+    private javax.swing.JButton clearButton;
     private javax.swing.JTabbedPane contactPanel;
     private java.awt.TextArea contactsTextArea;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JButton findContactButton;
     private javax.swing.JTabbedPane formPanel;
     private javax.swing.JTabbedPane historyPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JTextField mailField;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JTextField phoneField;
+    private javax.swing.JButton reloadButton;
     // End of variables declaration//GEN-END:variables
 }

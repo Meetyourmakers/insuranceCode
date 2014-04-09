@@ -31,16 +31,16 @@ public class Contact implements Serializable{
         return phone;
     }
     
-    public void setName(){
-        
+    public void setName(String n){
+        name = n;
     }
     
-    public void setMail(){
-        
+    public void setMail(String m){
+        mail = m;
     }
     
-    public void setPhone(){
-        
+    public void setPhone(String p){
+        phone = p;
     }
     
 }
