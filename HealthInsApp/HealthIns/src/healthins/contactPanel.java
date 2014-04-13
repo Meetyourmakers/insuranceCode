@@ -95,8 +95,18 @@ public class contactPanel extends javax.swing.JFrame {
         }
     }
     
+    private boolean validateInputName(String usr){
+        return usr.matches("[a-zA-Z0-9]+");
+    }
     
+    private boolean validateInputMail(String usr){
+        return usr.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                +"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+    }
     
+    private boolean validateInputPhone(String usr){
+        return usr.matches("[0-9]+");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -220,7 +230,7 @@ public class contactPanel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(logoutButton)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -228,11 +238,11 @@ public class contactPanel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(contactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(findContactButton)
+                                .addComponent(findContactButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(reloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(contactsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, 0)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,11 +308,11 @@ public class contactPanel extends javax.swing.JFrame {
                         .addComponent(contactsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(findContactButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(logoutButton)
-                        .addComponent(deleteButton)
-                        .addComponent(reloadButton))))
+                        .addComponent(findContactButton)
+                        .addComponent(reloadButton)
+                        .addComponent(deleteButton))
+                    .addComponent(logoutButton)))
         );
 
         pack();
@@ -357,7 +367,7 @@ public class contactPanel extends javax.swing.JFrame {
         String mail = this.mailField.getText();
         String phone = this.phoneField.getText();
         try{
-            if(name.length()==0 || mail.length()==0 || phone.length()==0)
+            if(!validateInputName(name) || !validateInputMail(mail) || !validateInputPhone(phone))
                 isEmpty = true;
         }catch(Exception e){
             isEmpty = true;
@@ -382,7 +392,9 @@ public class contactPanel extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Contact "+name+" already is in your contact list!");
         }
         else
-            JOptionPane.showMessageDialog(null,"None of the input field can be blank.");
+            JOptionPane.showMessageDialog(null,"Name, e-mail or phone using invalid format!\n"
+                    + "*Name accepts numbers and letters\n*Use only numbers for phone"
+                    + "\n*Email format accepted: example@example.com");
     }//GEN-LAST:event_addContactButtonActionPerformed
 
     private void calcPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcPanelMouseClicked

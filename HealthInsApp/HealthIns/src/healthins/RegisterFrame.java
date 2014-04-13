@@ -1,5 +1,6 @@
 package healthins;
 import javax.swing.JOptionPane;
+
 public class RegisterFrame extends javax.swing.JFrame {
     
     public RegisterFrame() {
@@ -119,6 +120,11 @@ public class RegisterFrame extends javax.swing.JFrame {
         pswInput_Register.setText("");
     }//GEN-LAST:event_clearReg_RegisterActionPerformed
 
+    private boolean validateInput(String usr){
+        return usr.matches("[a-zA-Z0-9]+");
+    }
+    
+    
     private void submitReg_RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitReg_RegisterActionPerformed
         String username = usrInput_Register.getText();
         String password = pswInput_Register.getText();
@@ -129,12 +135,13 @@ public class RegisterFrame extends javax.swing.JFrame {
                 break;
             }
         }
-        if(username.length()==0 || password.length()==0)
-            JOptionPane.showMessageDialog(null,"Username and Password cannot be blank!");
+        if(username.length()==0 || password.length()==0 || !validateInput(username)){
+            JOptionPane.showMessageDialog(null,"Username or Password invalid!");
+        }
         else if(flag){
             Login.users.add(new Usr(username,password));
             HealthIns.saveUsers(Login.users);
-            JOptionPane.showMessageDialog(null,"Username "+username+" created!.");
+            JOptionPane.showMessageDialog(null,"Username "+username+" created!");
             usrInput_Register.setText("");
             pswInput_Register.setText("");
         }
