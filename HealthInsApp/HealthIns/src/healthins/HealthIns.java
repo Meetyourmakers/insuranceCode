@@ -63,7 +63,7 @@ public class HealthIns {
                 try(ObjectInput input = new ObjectInputStream (buffer)) {
                     ArrayList<Contact> recoveredUsers = (ArrayList<Contact>)input.readObject();
                     for(Contact c: recoveredUsers)
-                       contacts.add(new Contact(c.getName(), c.getMail(), c.getPhone(), c.getOwner()));
+                       contacts.add(new Contact(c.getName(), c.getLastName(), c.getMail(), c.getPhone(), c.getOwner()));
                 }
             }
         }

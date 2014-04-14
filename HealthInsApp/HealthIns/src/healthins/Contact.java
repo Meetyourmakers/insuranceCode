@@ -4,15 +4,17 @@ import java.io.Serializable;
 
 public class Contact implements Serializable{
     String name;
+    String lastName;
     String mail;
     String phone;
     String owner;
     
-    public Contact(String usr, String email, String tel, String own){
+    public Contact(String usr, String last, String email, String tel, String own){
         name = usr;
         mail = email;
         phone = tel;
         owner = own;
+        lastName = last;
     }
     
     public String getOwner(){
@@ -21,6 +23,10 @@ public class Contact implements Serializable{
     
     public String getName(){
         return name;
+    }
+    
+    public String getLastName(){
+        return lastName;
     }
     
     public String getMail(){
@@ -42,5 +48,10 @@ public class Contact implements Serializable{
     public void setPhone(String p){
         phone = p;
     }
+    
+    public void setLastName(String l){
+        lastName = l;
+    }
+    
     
 }
