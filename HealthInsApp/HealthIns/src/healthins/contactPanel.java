@@ -388,14 +388,14 @@ public class contactPanel extends javax.swing.JFrame {
         }
         if(!isEmpty){
             for(int i=0; i<contacts.size(); i++){
-                if(contacts.get(i).getName().equalsIgnoreCase(name) && contacts.get(i).getOwner().equals(ownerList)){
+                if(contacts.get(i).getName().equalsIgnoreCase(name) && contacts.get(i).getLastName().equalsIgnoreCase(lastName) && contacts.get(i).getOwner().equals(ownerList)){
                     flag = false;
                     break;
                 }
             }
             if(flag){
                 contacts.add(new Contact(name,lastName, mail,phone,HealthIns.currentUsr.getId()));
-                JOptionPane.showMessageDialog(null,"Contact "+name+" added to your contact list!");
+                JOptionPane.showMessageDialog(null,"Contact "+name+" "+lastName+" added to your contact list!");
                 saveContactList(contacts);
                 showContacts();
                 this.mailField.setText("");
@@ -404,7 +404,7 @@ public class contactPanel extends javax.swing.JFrame {
                 this.lastNameField.setText("");
             }
             else
-                JOptionPane.showMessageDialog(null,"Contact "+name+" already is in your contact list!");
+                JOptionPane.showMessageDialog(null,"Contact "+name+" "+lastName+" already is in your contact list!");
         }
         else{
             JOptionPane.showMessageDialog(null,"Name, e-mail or phone using invalid format!"
