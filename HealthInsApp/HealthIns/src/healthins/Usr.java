@@ -4,7 +4,6 @@ import java.io.Serializable;
 public class Usr implements Serializable{
     private String id;
     private String pass;
-    private Calendar cal;
     
     public Usr(String id, String pass){
         this.id = id;
@@ -18,17 +17,9 @@ public class Usr implements Serializable{
     public String getPass() {
         return pass;
     }
-
-    public Calendar getCal() {
-        return cal;
-    }
     
     
     public void setPass(String pass) {
         this.pass = pass;
-    }
-
-    public void setCal(Calendar cal) {
-        this.cal = cal;
     }
 }

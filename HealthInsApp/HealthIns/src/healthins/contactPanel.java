@@ -347,7 +347,10 @@ public class contactPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_formPanelMouseClicked
 
     private void calendarPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calendarPanelMouseClicked
-
+        this.dispose();
+        this.setVisible(false);
+        calendarPanel frame = new calendarPanel();
+        frame.setVisible(true);
     }//GEN-LAST:event_calendarPanelMouseClicked
 
     private void findContactButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findContactButtonActionPerformed
