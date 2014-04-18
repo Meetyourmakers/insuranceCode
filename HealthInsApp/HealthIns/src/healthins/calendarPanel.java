@@ -40,7 +40,7 @@ public class calendarPanel extends javax.swing.JFrame {
                 try(ObjectInput input = new ObjectInputStream (buffer)) {
                     ArrayList<Calendar> recoveredCal = (ArrayList<Calendar>)input.readObject();
                     for(Calendar c: recoveredCal)
-                       calendar.add(new Calendar(c.getDay(), c.getMonth(), c.getDescription(), c.getOwner()));
+                       calendar.add(new Calendar(c.getDay(), c.getMonth(), c.getDescription(), c.getOwner(), c.getName()));
                 }
             }
         }
@@ -107,13 +107,19 @@ public class calendarPanel extends javax.swing.JFrame {
         MonthComboBox = new javax.swing.JComboBox();
         loadButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        descriptionArea = new javax.swing.JTextArea();
+        myAppointmentsArea = new javax.swing.JTextArea();
         saveButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         loadAllButton = new javax.swing.JButton();
-        monthButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        newAppointmentArea = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        eventNameBox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         formPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -167,14 +173,15 @@ public class calendarPanel extends javax.swing.JFrame {
             }
         });
 
-        descriptionArea.setColumns(20);
-        descriptionArea.setRows(5);
-        descriptionArea.addMouseListener(new java.awt.event.MouseAdapter() {
+        myAppointmentsArea.setEditable(false);
+        myAppointmentsArea.setColumns(20);
+        myAppointmentsArea.setRows(5);
+        myAppointmentsArea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                descriptionAreaMouseClicked(evt);
+                myAppointmentsAreaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(descriptionArea);
+        jScrollPane1.setViewportView(myAppointmentsArea);
 
         saveButton.setText("Save");
         saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -197,12 +204,23 @@ public class calendarPanel extends javax.swing.JFrame {
             }
         });
 
-        monthButton.setText("Month");
-        monthButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        newAppointmentArea.setColumns(20);
+        newAppointmentArea.setRows(5);
+        newAppointmentArea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                monthButtonMouseClicked(evt);
+                newAppointmentAreaMouseClicked(evt);
             }
         });
+        jScrollPane2.setViewportView(newAppointmentArea);
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel1.setText("My Appointments");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel2.setText("New Appointment");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel3.setText("Event Name");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,40 +230,46 @@ public class calendarPanel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calendarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(contactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(historyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calcPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(MonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(saveButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(loadButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(deleteButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(loadAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(loadAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 9, Short.MAX_VALUE)
+                                .addComponent(saveButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(logoutButton))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(monthButton)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(MonthComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(eventNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(11, 11, 11))))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel3)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(calendarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(contactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(historyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(calcPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,23 +277,35 @@ public class calendarPanel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(historyPanel)
                     .addComponent(contactPanel)
-                    .addComponent(calendarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                    .addComponent(calendarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                     .addComponent(calcPanel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(MonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loadButton)
-                    .addComponent(saveButton)
-                    .addComponent(deleteButton)
-                    .addComponent(loadAllButton)
-                    .addComponent(monthButton))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(logoutButton)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eventNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addComponent(logoutButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(loadButton)
+                            .addComponent(deleteButton)
+                            .addComponent(loadAllButton)
+                            .addComponent(saveButton))
                         .addContainerGap())))
         );
 
@@ -323,20 +359,22 @@ public class calendarPanel extends javax.swing.JFrame {
         String month = (String) this.MonthComboBox.getSelectedItem();
         String day = (String) this.dayComboBox.getSelectedItem();
         String desc;
+        String eName;
         if(checkDate(day,month)){
             if(!isScheduled(month,day)){
                 try{
-                    desc = this.descriptionArea.getText();
-                    if(desc.length()!=0){
-                        cal.add(new Calendar(day, month, desc, HealthIns.currentUsr.getId()));
+                    desc = this.newAppointmentArea.getText();
+                    eName = this.eventNameBox.getText();
+                    if(desc.length()!=0 && eName.length()!=0){
+                        cal.add(new Calendar(day, month, desc, HealthIns.currentUsr.getId(), eName));
                         saveCalendarList(cal);
                         JOptionPane.showMessageDialog(null,"Appointment added at "+day+"/"+month);
-                        this.descriptionArea.setText("");
+                        this.newAppointmentArea.setText("");
                     }
                     else
-                        JOptionPane.showMessageDialog(null,"The text field is empty!"); 
+                        JOptionPane.showMessageDialog(null,"All the events must contain name and description!"); 
                 }catch(Exception e){
-                    JOptionPane.showMessageDialog(null,"The text field is empty!"); 
+                    JOptionPane.showMessageDialog(null,"All the events must contain name and description!"); 
                 }
             }
             else
@@ -351,17 +389,21 @@ public class calendarPanel extends javax.swing.JFrame {
         cal = readCalendarList(cal);
         String month = (String) this.MonthComboBox.getSelectedItem();
         String day = (String) this.dayComboBox.getSelectedItem();
+        boolean found = false;
         if(checkDate(day,month)){
             for(int i=0; i<cal.size(); i++){
                 if(cal.get(i).getDay().equalsIgnoreCase(day) && cal.get(i).getMonth().equalsIgnoreCase(month) 
                         && cal.get(i).getOwner().equals(HealthIns.currentUsr.getId())){
-                    this.descriptionArea.setText("Day\tMonth\n------------------------------------------------------------------\n");
-                    this.descriptionArea.append(cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+cal.get(i).getDescription()+"\n");
-                    this.descriptionArea.append("------------------------------------------------------------------\n");
+                    this.myAppointmentsArea.setText("Day\tMonth\n------------------------------------------------------------------\n");
+                    this.myAppointmentsArea.append(cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+"Event: "+cal.get(i).getName()+"\n\nDescription\n"+cal.get(i).getDescription()+"\n");
+                    this.myAppointmentsArea.append("------------------------------------------------------------------\n");
+                    found = true;
                     break;
                 }
             }
-        }
+            if(!found)
+                JOptionPane.showMessageDialog(null,"No appointments scheduled for this day.");
+        }    
         else
            JOptionPane.showMessageDialog(null,"Invalid date format!");  
     }//GEN-LAST:event_loadButtonMouseClicked
@@ -369,10 +411,10 @@ public class calendarPanel extends javax.swing.JFrame {
     private void loadAllButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadAllButtonMouseClicked
         ArrayList<Calendar> cal = new ArrayList();
         cal = readCalendarList(cal);
-        this.descriptionArea.setText("Day\tMonth\n------------------------------------------------------------------\n");
+        this.myAppointmentsArea.setText("Day\tMonth\n------------------------------------------------------------------\n");
         for(int i=0; i<cal.size(); i++){
-            this.descriptionArea.append(cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+cal.get(i).getDescription()+"\n");
-            this.descriptionArea.append("------------------------------------------------------------------\n");
+            this.myAppointmentsArea.append(cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+"Event: "+cal.get(i).getName()+"\n\nDescription\n"+cal.get(i).getDescription()+"\n");
+            this.myAppointmentsArea.append("------------------------------------------------------------------\n");
         }
     }//GEN-LAST:event_loadAllButtonMouseClicked
 
@@ -389,7 +431,7 @@ public class calendarPanel extends javax.swing.JFrame {
                     cal.remove(i);
                     saveCalendarList(cal);
                     JOptionPane.showMessageDialog(null,"Appointment deleted!");
-                    this.descriptionArea.setText("");
+                    this.myAppointmentsArea.setText("");
                     found = true;
                     break;
                 }
@@ -402,26 +444,13 @@ public class calendarPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"No appointments scheduled for this day.");
     }//GEN-LAST:event_deleteButtonMouseClicked
 
-    private void monthButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monthButtonMouseClicked
-        ArrayList<Calendar> cal = new ArrayList();
-        cal = readCalendarList(cal);
-        String month = (String) this.MonthComboBox.getSelectedItem();
-        if(!month.equalsIgnoreCase("month")){
-            this.descriptionArea.setText("Appointments for the month of "+month+"\n------------------------------------------------------------------\n");
-            for(int i=0; i<cal.size(); i++){
-                if(cal.get(i).getMonth().equalsIgnoreCase(month) && cal.get(i).getOwner().equals(HealthIns.currentUsr.getId())){
-                    this.descriptionArea.append("Day\t"+cal.get(i).getDay()+"\n\n"+cal.get(i).getDescription());
-                    this.descriptionArea.append("\n------------------------------------------------------------------\n");
-                }
-            }
-        }
-        else
-            JOptionPane.showMessageDialog(null,"You must choose a month.");
-    }//GEN-LAST:event_monthButtonMouseClicked
+    private void myAppointmentsAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myAppointmentsAreaMouseClicked
+        
+    }//GEN-LAST:event_myAppointmentsAreaMouseClicked
 
-    private void descriptionAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_descriptionAreaMouseClicked
-        this.descriptionArea.setText("");
-    }//GEN-LAST:event_descriptionAreaMouseClicked
+    private void newAppointmentAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newAppointmentAreaMouseClicked
+        this.newAppointmentArea.setText("");
+    }//GEN-LAST:event_newAppointmentAreaMouseClicked
 //JOptionPane.showMessageDialog(null,"Contact "); 
     private boolean checkDate(String day, String month){
         if(!day.equalsIgnoreCase("day")){
@@ -490,14 +519,19 @@ public class calendarPanel extends javax.swing.JFrame {
     private javax.swing.JTabbedPane contactPanel;
     private javax.swing.JComboBox dayComboBox;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JTextArea descriptionArea;
+    private javax.swing.JTextField eventNameBox;
     private javax.swing.JTabbedPane formPanel;
     private javax.swing.JTabbedPane historyPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton loadAllButton;
     private javax.swing.JButton loadButton;
     private javax.swing.JButton logoutButton;
-    private javax.swing.JButton monthButton;
+    private javax.swing.JTextArea myAppointmentsArea;
+    private javax.swing.JTextArea newAppointmentArea;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }

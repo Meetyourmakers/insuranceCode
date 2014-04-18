@@ -7,15 +7,21 @@ public class Calendar implements Serializable{
     String month;
     String description;
     String owner;
-    public Calendar(String d, String m, String desc, String own){
+    String name;
+    public Calendar(String d, String m, String desc, String own, String s){
         day = d;
         month = m;
         description = desc;
         owner = own;
+        name = s;
     }
     
     public String getDay(){
         return day;
+    }
+    
+    public String getName(){
+        return name;
     }
     
     public String getMonth(){
