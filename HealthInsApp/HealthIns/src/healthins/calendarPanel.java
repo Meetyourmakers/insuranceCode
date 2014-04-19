@@ -139,6 +139,12 @@ public class calendarPanel extends javax.swing.JFrame {
             }
         });
 
+        historyPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historyPanelMouseClicked(evt);
+            }
+        });
+
         logoutButton.setText("Logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -451,6 +457,14 @@ public class calendarPanel extends javax.swing.JFrame {
     private void newAppointmentAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newAppointmentAreaMouseClicked
         this.newAppointmentArea.setText("");
     }//GEN-LAST:event_newAppointmentAreaMouseClicked
+
+    private void historyPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyPanelMouseClicked
+        this.dispose();
+        this.setVisible(false);
+        historyPanel frame = new historyPanel();
+        frame.setSize(640, 405);
+        frame.setVisible(true);
+    }//GEN-LAST:event_historyPanelMouseClicked
 //JOptionPane.showMessageDialog(null,"Contact "); 
     private boolean checkDate(String day, String month){
         if(!day.equalsIgnoreCase("day")){
