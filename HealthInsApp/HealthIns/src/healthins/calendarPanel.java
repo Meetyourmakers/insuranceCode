@@ -114,6 +114,7 @@ public class calendarPanel extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         eventNameBox = new javax.swing.JTextField();
+        editEventButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -212,22 +213,31 @@ public class calendarPanel extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel3.setText("Event Name");
 
+        editEventButton.setText("Edit Event");
+        editEventButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEventButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(loadButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(loadAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editEventButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                         .addComponent(logoutButton))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel3)
@@ -285,7 +295,8 @@ public class calendarPanel extends javax.swing.JFrame {
                             .addComponent(loadButton)
                             .addComponent(deleteButton)
                             .addComponent(loadAllButton)
-                            .addComponent(saveButton))
+                            .addComponent(saveButton)
+                            .addComponent(editEventButton))
                         .addContainerGap())))
         );
 
@@ -339,17 +350,22 @@ public class calendarPanel extends javax.swing.JFrame {
         String month = (String) this.MonthComboBox.getSelectedItem();
         String day = (String) this.dayComboBox.getSelectedItem();
         String desc;
-        String eName;
+        String eName = "";
+        try{
+            eName = this.eventNameBox.getText();
+        } catch(Exception e){
+            
+        }
         if(checkDate(day,month)){
-            if(!isScheduled(month,day)){
+            if(!isScheduled(month,day,eName)){
                 try{
                     desc = this.newAppointmentArea.getText();
-                    eName = this.eventNameBox.getText();
                     if(desc.length()!=0 && eName.length()!=0){
                         cal.add(new Calendar(day, month, desc, HealthIns.currentUsr.getId(), eName));
                         saveCalendarList(cal);
                         JOptionPane.showMessageDialog(null,"Appointment added at "+day+"/"+month);
                         this.newAppointmentArea.setText("");
+                        this.eventNameBox.setText("");
                     }
                     else
                         JOptionPane.showMessageDialog(null,"All the events must contain name and description!"); 
@@ -391,11 +407,17 @@ public class calendarPanel extends javax.swing.JFrame {
     private void loadAllButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadAllButtonMouseClicked
         ArrayList<Calendar> cal = new ArrayList();
         cal = readCalendarList(cal);
+        String finaltext ="";
+        String line = "------------------------------------------------------------------\n";
         for(int i=0; i<cal.size(); i++){
-            JOptionPane.showMessageDialog(null,"------------------------------------------------------------------\n"
-            + "Date: "+cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+"Event: "+cal.get(i).getName()+"\n\nDescription\n"+cal.get(i).getDescription()+"\n"
-            +"------------------------------------------------------------------\n");
+            if(cal.get(i).getOwner().equals(HealthIns.currentUsr.getId())){
+                finaltext = finaltext + line
+                + "Date: "+cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+"Event: "+cal.get(i).getName()+"\n\nDescription\n"+cal.get(i).getDescription()+"\n"
+                +line;
+            }
         }
+        if(finaltext.length()!=0)
+            JOptionPane.showMessageDialog(null,finaltext);
     }//GEN-LAST:event_loadAllButtonMouseClicked
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
@@ -404,27 +426,35 @@ public class calendarPanel extends javax.swing.JFrame {
         boolean found = false;
         String month = (String) this.MonthComboBox.getSelectedItem();
         String day = (String) this.dayComboBox.getSelectedItem();
-        if(checkDate(day,month)){
+        String eName = "";
+        try{
+            eName = this.eventNameBox.getText();
+        } catch(Exception e){
+            
+        }
+        if(checkDate(day,month) && !eName.equals("")){
             for(int i=0; i<cal.size(); i++){
                 if(cal.get(i).getDay().equalsIgnoreCase(day) && cal.get(i).getMonth().equalsIgnoreCase(month) 
-                        && cal.get(i).getOwner().equals(HealthIns.currentUsr.getId())){
+                        && cal.get(i).getOwner().equals(HealthIns.currentUsr.getId()) && cal.get(i).getName().equalsIgnoreCase(eName)){
                     cal.remove(i);
                     saveCalendarList(cal);
                     JOptionPane.showMessageDialog(null,"Appointment deleted!");
                     found = true;
+                    this.eventNameBox.setText("");
                     break;
                 }
             }
         }
         else{
-           JOptionPane.showMessageDialog(null,"Invalid date format!");  
+           JOptionPane.showMessageDialog(null,"Invalid date format or event name!"); 
+           found = true;
         }
         if(!found)
-            JOptionPane.showMessageDialog(null,"No appointments scheduled for this day.");
+            JOptionPane.showMessageDialog(null,"Appointment not found!");
     }//GEN-LAST:event_deleteButtonMouseClicked
 
     private void newAppointmentAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newAppointmentAreaMouseClicked
-        this.newAppointmentArea.setText("");
+        
     }//GEN-LAST:event_newAppointmentAreaMouseClicked
 
     private void historyPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyPanelMouseClicked
@@ -434,6 +464,32 @@ public class calendarPanel extends javax.swing.JFrame {
         frame.setSize(640, 405);
         frame.setVisible(true);
     }//GEN-LAST:event_historyPanelMouseClicked
+
+    private void editEventButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEventButtonMouseClicked
+        ArrayList<Calendar> cal = new ArrayList();
+        cal = readCalendarList(cal);
+        String month = (String) this.MonthComboBox.getSelectedItem();
+        String day = (String) this.dayComboBox.getSelectedItem();
+        String eName = "";
+        this.newAppointmentArea.setText("");
+        try{
+            eName = this.eventNameBox.getText();
+        } catch(Exception e){
+            
+        }
+        if(checkDate(day,month) && eName.length()!=0){
+            for (int i=0; i<cal.size(); i++){
+                if(cal.get(i).getDay().equals(day) && cal.get(i).getMonth().equals(month)
+                    && cal.get(i).getName().equalsIgnoreCase(eName) && cal.get(i).getOwner().equals(HealthIns.currentUsr.getId())){
+                    this.newAppointmentArea.append(cal.get(i).getDescription()+"\n");
+                    cal.remove(i);
+                    saveCalendarList(cal);
+                }
+            } 
+        }
+        else
+            JOptionPane.showMessageDialog(null,"Invalid date format or event name!");
+    }//GEN-LAST:event_editEventButtonMouseClicked
 //JOptionPane.showMessageDialog(null,"Contact "); 
     private boolean checkDate(String day, String month){
         if(!day.equalsIgnoreCase("day")){
@@ -451,12 +507,12 @@ public class calendarPanel extends javax.swing.JFrame {
         
     }
     
-    private boolean isScheduled(String month, String day){
+    private boolean isScheduled(String month, String day, String name){
         ArrayList<Calendar> cal = new ArrayList();
         cal = readCalendarList(cal);
         String currentUser = HealthIns.currentUsr.getId();
         for (int i=0; i<cal.size(); i++){
-            if(cal.get(i).getDay().equals(day) && cal.get(i).getMonth().equals(month) 
+            if(cal.get(i).getDay().equals(day) && cal.get(i).getMonth().equals(month) &&  cal.get(i).getName().equalsIgnoreCase(name)
                     && cal.get(i).getOwner().equals(currentUser))
                 return true;
         }
@@ -502,6 +558,7 @@ public class calendarPanel extends javax.swing.JFrame {
     private javax.swing.JTabbedPane contactPanel;
     private javax.swing.JComboBox dayComboBox;
     private javax.swing.JButton deleteButton;
+    private javax.swing.JButton editEventButton;
     private javax.swing.JTextField eventNameBox;
     private javax.swing.JTabbedPane formPanel;
     private javax.swing.JTabbedPane historyPanel;

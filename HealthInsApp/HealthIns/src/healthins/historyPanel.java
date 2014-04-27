@@ -360,7 +360,6 @@ public class historyPanel extends javax.swing.JFrame {
         }
         this.editHistoryArea.setText("");
         saveHistory(hist);
-        loadHistoryMouseClicked(evt);
     }//GEN-LAST:event_saveHistoryMouseClicked
     
     private boolean histExists(){
