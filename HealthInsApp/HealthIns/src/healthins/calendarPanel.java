@@ -105,10 +105,10 @@ public class calendarPanel extends javax.swing.JFrame {
         calcPanel = new javax.swing.JTabbedPane();
         dayComboBox = new javax.swing.JComboBox();
         MonthComboBox = new javax.swing.JComboBox();
-        loadButton = new javax.swing.JButton();
+        loadMonthButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        loadAllButton = new javax.swing.JButton();
+        loadDayButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         newAppointmentArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
@@ -165,15 +165,15 @@ public class calendarPanel extends javax.swing.JFrame {
 
         MonthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
 
-        loadButton.setText("Load");
-        loadButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        loadMonthButton.setText("Load Month");
+        loadMonthButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loadButtonMouseClicked(evt);
+                loadMonthButtonMouseClicked(evt);
             }
         });
-        loadButton.addActionListener(new java.awt.event.ActionListener() {
+        loadMonthButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadButtonActionPerformed(evt);
+                loadMonthButtonActionPerformed(evt);
             }
         });
 
@@ -191,10 +191,10 @@ public class calendarPanel extends javax.swing.JFrame {
             }
         });
 
-        loadAllButton.setText("Load All");
-        loadAllButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        loadDayButton.setText("Load Day");
+        loadDayButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loadAllButtonMouseClicked(evt);
+                loadDayButtonMouseClicked(evt);
             }
         });
 
@@ -228,9 +228,9 @@ public class calendarPanel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(loadButton)
+                        .addComponent(loadMonthButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(loadAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(loadDayButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editEventButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -292,9 +292,9 @@ public class calendarPanel extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(loadButton)
+                            .addComponent(loadMonthButton)
                             .addComponent(deleteButton)
-                            .addComponent(loadAllButton)
+                            .addComponent(loadDayButton)
                             .addComponent(saveButton)
                             .addComponent(editEventButton))
                         .addContainerGap())))
@@ -340,9 +340,9 @@ public class calendarPanel extends javax.swing.JFrame {
        
     }//GEN-LAST:event_dayComboBoxActionPerformed
 
-    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
+    private void loadMonthButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadMonthButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_loadButtonActionPerformed
+    }//GEN-LAST:event_loadMonthButtonActionPerformed
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
         ArrayList<Calendar> cal = new ArrayList();
@@ -374,51 +374,58 @@ public class calendarPanel extends javax.swing.JFrame {
                 }
             }
             else
-                JOptionPane.showMessageDialog(null,"You already have scheduled appointments on "+day+"/"+month); 
+                JOptionPane.showMessageDialog(null,"This event has already been added on this day!"); 
         }
         else
             JOptionPane.showMessageDialog(null,"Invalid date format!"); 
     }//GEN-LAST:event_saveButtonMouseClicked
 
-    private void loadButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadButtonMouseClicked
+    private void loadMonthButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadMonthButtonMouseClicked
+        ArrayList<Calendar> cal = new ArrayList();
+        cal = readCalendarList(cal);
+        String month = (String) this.MonthComboBox.getSelectedItem();
+        String finaltext="";
+        String line = "------------------------------------------------------------------\n";
+        if(checkDate("1",month)){
+            for(int i=0; i<cal.size(); i++){
+                if(cal.get(i).getMonth().equalsIgnoreCase(month) 
+                        && cal.get(i).getOwner().equals(HealthIns.currentUsr.getId())){
+                    finaltext += line + cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+"Event: "+cal.get(i).getName()+
+                            "\n\nDescription\n"+cal.get(i).getDescription()+"\n"+line;
+                }
+            }
+            if(finaltext.equals(""))
+                JOptionPane.showMessageDialog(null,"No appointments scheduled for this month.");
+            else
+                JOptionPane.showMessageDialog(null,finaltext);
+        }    
+        else
+           JOptionPane.showMessageDialog(null,"Invalid date format!");  
+    }//GEN-LAST:event_loadMonthButtonMouseClicked
+
+    private void loadDayButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadDayButtonMouseClicked
         ArrayList<Calendar> cal = new ArrayList();
         cal = readCalendarList(cal);
         String month = (String) this.MonthComboBox.getSelectedItem();
         String day = (String) this.dayComboBox.getSelectedItem();
-        boolean found = false;
+        String finaltext="";
+        String line = "------------------------------------------------------------------\n";
         if(checkDate(day,month)){
             for(int i=0; i<cal.size(); i++){
-                if(cal.get(i).getDay().equalsIgnoreCase(day) && cal.get(i).getMonth().equalsIgnoreCase(month) 
+                if(cal.get(i).getDay().equals(day) && cal.get(i).getMonth().equalsIgnoreCase(month) 
                         && cal.get(i).getOwner().equals(HealthIns.currentUsr.getId())){
-                    found = true;
-                    JOptionPane.showMessageDialog(null,"------------------------------------------------------------------\n"
-                    +cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+"Event: "+cal.get(i).getName()+"\n\nDescription\n"+cal.get(i).getDescription()+"\n"
-                    +"------------------------------------------------------------------\n");
-                    break;
+                    finaltext += line + cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+"Event: "+cal.get(i).getName()+
+                            "\n\nDescription\n"+cal.get(i).getDescription()+"\n"+line;
                 }
             }
-            if(!found)
+            if(finaltext.equals(""))
                 JOptionPane.showMessageDialog(null,"No appointments scheduled for this day.");
+            else
+                JOptionPane.showMessageDialog(null,finaltext);
         }    
         else
            JOptionPane.showMessageDialog(null,"Invalid date format!");  
-    }//GEN-LAST:event_loadButtonMouseClicked
-
-    private void loadAllButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadAllButtonMouseClicked
-        ArrayList<Calendar> cal = new ArrayList();
-        cal = readCalendarList(cal);
-        String finaltext ="";
-        String line = "------------------------------------------------------------------\n";
-        for(int i=0; i<cal.size(); i++){
-            if(cal.get(i).getOwner().equals(HealthIns.currentUsr.getId())){
-                finaltext = finaltext + line
-                + "Date: "+cal.get(i).getDay()+"\t"+cal.get(i).getMonth()+"\n\n"+"Event: "+cal.get(i).getName()+"\n\nDescription\n"+cal.get(i).getDescription()+"\n"
-                +line;
-            }
-        }
-        if(finaltext.length()!=0)
-            JOptionPane.showMessageDialog(null,finaltext);
-    }//GEN-LAST:event_loadAllButtonMouseClicked
+    }//GEN-LAST:event_loadDayButtonMouseClicked
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
         ArrayList<Calendar> cal = new ArrayList();
@@ -490,7 +497,7 @@ public class calendarPanel extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null,"Invalid date format or event name!");
     }//GEN-LAST:event_editEventButtonMouseClicked
-//JOptionPane.showMessageDialog(null,"Contact "); 
+
     private boolean checkDate(String day, String month){
         if(!day.equalsIgnoreCase("day")){
             int d = Integer.parseInt(day);
@@ -565,8 +572,8 @@ public class calendarPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton loadAllButton;
-    private javax.swing.JButton loadButton;
+    private javax.swing.JButton loadDayButton;
+    private javax.swing.JButton loadMonthButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JTextArea newAppointmentArea;
     private javax.swing.JButton saveButton;
